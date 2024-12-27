@@ -38,9 +38,9 @@
 
     <form method="POST">
         <div class="seats">
-            {% for row in range(1, 6) %}
+{% for row in range(0, 6) %}
                 {% for col in range(1, 11) %}
-                    {% set seat_id = row ~ (col if col < 10 else '0') %}
+                    {% set seat_id = (row if col < 10 else row+1) ~ (col if col < 10 else '0') %}
                     <div class="seat" id="{{ seat_id }}" onclick="selectSeat('{{ seat_id }}')">
                         {{ seat_id }}
                     </div>
