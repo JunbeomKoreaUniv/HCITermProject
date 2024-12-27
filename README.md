@@ -25,7 +25,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### app.py 실행
+## 3. app.py 실행
 ```
 python app.py
 ```
