@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ theater }} - {{ hall }} 좌석 평점 부여</title>
+    <style>
+        .screen {
+            width: 100%;
+            height: 50px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            margin-bottom: 20px;
+        }
+        .seats {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+            justify-content: center;
+        }
+        .seat {
+            width: 40px;
+            height: 40px;
+            background-color: #ddd;
+            text-align: center;
+            line-height: 40px;
+            cursor: pointer;
+        }
+        .seat.selected {
+            background-color: #ff6347;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ theater }} - {{ hall }} 좌석 평점 부여</h1>
+    <div class="screen">SCREEN</div>
+
+    <form method="POST">
+        <div class="seats">
+            {% for row in range(1, 6) %}
+                {% for col in range(1, 11) %}
+                    {% set seat_id = row ~ (col if col < 10 else '0') %}
+                    <div class="seat" id="{{ seat_id }}" onclick="selectSeat('{{ seat_id }}')">
+                        {{ seat_id }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+        <input type="hidden" name="seat" id="selectedSeat">
+        <label for="rating">평점 (1~5):</label>
+        <select name="rating" id="rating">
+            <option value="1">1 - 별로에요</option>
+            <option value="2">2 - 그냥 그래요</option>
+            <option value="3">3 - 보통이에요</option>
+            <option value="4">4 - 좋아요</option>
+            <option value="5">5 - 최고에요</option>
+        </select>
+        <button type="submit" style="margin-top: 20px;">평점 남기기</button>
+    </form>
+
+    <script>
+        function selectSeat(seatId) {
+            const seat = document.getElementById(seatId);
+            const selectedSeatInput = document.getElementById("selectedSeat");
+
+            document.querySelectorAll('.seat').forEach(s => s.classList.remove('selected'));
+            seat.classList.add('selected');
+            selectedSeatInput.value = seatId;
+        }
+    </script>
+</body>
+</html>

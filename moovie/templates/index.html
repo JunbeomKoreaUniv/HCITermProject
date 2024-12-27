@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>고대생 전용 영화 예매</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 80%;
+            max-width: 1000px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 8px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 3px solid #8b0000;
+            padding-bottom: 10px;
+        }
+        p {
+            font-size: 1.1em;
+            color: #555;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background-color: #f9f9f9;
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        li:hover {
+            background-color: #f1f1f1;
+        }
+        a {
+            text-decoration: none;
+            color: #8b0000;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #b22222;
+        }
+        button {
+            background-color: #8b0000;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #b22222;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #777;
+        }
+        .movie-item {
+        display: flex;
+        align-items: center;
+        }
+        .poster {
+            width: 100px;
+            height: auto;
+            margin-right: 20px;
+            border-radius: 6px;
+        }
+        .movie-info {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>고대생 전용 영화 예매</h1>
+        <img src="{{ url_for('static', filename='챗지피티가생성한로고.jpg') }}" class="logo">
+        <p>안암 근처의 영화관 통합 예매 사이트입니다.</p><br><br>
+
+        <h1>현재 상영 중인 영화</h1>
+        <ul>
+            {% for movie in movies %}
+            <li>
+                <div class="movie-item">
+                    <img src="{{ url_for('static', filename=movie.poster) }}" alt="{{ movie.title }} 포스터" class="poster">
+                    <div class="movie-info">
+                        <b>{{ movie.title }}</b> ({{ movie.year }})
+                        <div>
+                            <a href="{{ url_for('movie_schedule', movie=movie.title) }}">상영 스케줄 보기</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <h1>좌석 평점 부여</h1>
+        <a href="{{ url_for('select_theater') }}">
+            <button>좌석 평점 부여하기</button>
+        </a>
+
+        <h1>🎬 AI 영화 추천</h1>
+        <p>아무 텍스트나 입력하세요. 감정, 상황, 장르, 취향 모두 환영!</p>
+        <form action="/recommend" method="POST">
+            <input type="text" name="user_input" placeholder="영화 추천을 위한 텍스트를 입력하세요" required>
+            <button type="submit">추천 받기</button>
+        </form>
+
+        <div class="footer">
+            © 2024 고대생 전용 예매 시스템 | KU-Cinema All Rights Reserved.
+        </div>
+    </div>
+</body>
+</html>

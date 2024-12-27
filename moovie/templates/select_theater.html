@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영화관 및 상영관 선택</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 16px;
+            margin: 10px 0;
+            display: block;
+            color: #555;
+        }
+        select, button {
+            width: 80%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #ff4b5c;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #e04350;
+        }
+    </style>
+</head>
+<body>
+    <img src="{{ url_for('static', filename='챗지피티가생성한로고.jpg') }}" class="logo">
+    <br>
+    <div class="container">
+        <h1>영화관 및 상영관 선택</h1>
+        <form method="POST">
+            <label for="theater">영화관 선택</label>
+            <select name="theater" id="theater" required>
+                {% for theater in theaters.keys() %}
+                    <option value="{{ theater }}">{{ theater }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="hall">상영관 선택</label>
+            <select name="hall" id="hall" required>
+                {% for theater, halls in theaters.items() %}
+                    {% for hall in halls %}
+                        <option value="{{ hall }}">{{ hall }}</option>
+                    {% endfor %}
+                {% endfor %}
+            </select>
+
+            <button type="submit">좌석 보기</button>
+        </form>
+    </div>
+</body>
+</html>

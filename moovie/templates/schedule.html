@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ movie }} 상영 스케줄</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 28px;
+            color: #FF3232;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #444;
+            margin: 20px 0 10px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 12px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #ff4b5c;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 10px 20px;
+            display: inline-block;
+            border: 2px solid #ff4b5c;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        a:hover {
+            background-color: #ff4b5c;
+            color: white;
+        }
+        .home-link {
+            margin-top: 30px;
+            color: #666;
+            font-size: 16px;
+            text-decoration: none;
+        }
+        .home-link:hover {
+            text-decoration: underline;
+        }
+        .poster {
+            width: 500px;
+            height: auto;
+            margin-right: 20px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('static', filename=movie + '.jpg') }}" alt="{{ movie.title }} 포스터" class="poster">
+        <h1>{{ movie }} 상영 스케줄</h1>
+
+        {% for theater, times in schedules.items() %}
+        <h2>{{ theater }}</h2>
+        <ul>
+            {% for time, hall in times %}
+            <li>
+                <a href="{{ url_for('select_seat', movie=movie, theater=theater, time=time, hall=hall) }}">
+                    {{ time }} - {{ hall }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+
+        <a href="/" class="home-link">홈으로 돌아가기</a>
+    </div>
+</body>
+</html>

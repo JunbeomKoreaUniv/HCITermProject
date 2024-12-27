@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영화 추천 결과</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            font-size: 20px;
+            margin: 15px 0;
+        }
+        .home-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            border-radius: 8px;
+            color: white;
+            background-color: #ff4b5c;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>영화 추천 결과</h1>
+        <p>"{{ user_input }}"에 대한 추천 영화</p>
+        <img src="{{ poster_path }}" alt="추천 영화 포스터">
+        <p>{{ recommendations.replace('\n', '<br>') | safe }}</p>
+        <a href="/" class="home-link">홈으로 돌아가기</a>
+    </div>
+</body>
+</html>
